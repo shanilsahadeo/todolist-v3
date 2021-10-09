@@ -29,7 +29,7 @@
 
 >This should get the skeleton setup done to commence building the app
 
-- get basic HTML and send/receive data between frontend and server 
+- get basic HTML and send/receive data between frontend and server
 - use ejs variables to send data
 - Add functionality to add new to do items
 - add Mongo database to the project to store the data
