@@ -19,20 +19,24 @@
 
 ## Solution Notes
 
-- Create the project folder
-- initialise NPM
-- install NPM with defult settings
-- Create app.js and index.html
-- Add npm packages: express, body-parser, ejs
-  - ejs requires `views` folder with `*.ejs` file
-- Run node with nodemon
+- Create the project folder [done]
+- initialise NPM [done]
+- install NPM with defult settings [done]
+- Create app.js and index.html [done]
+- Add npm packages: express, body-parser, ejs [done]
+  - ejs requires `views` folder with `*.ejs` file [done]
+- Run node with nodemon [done]
 
 >This should get the skeleton setup done to commence building the app
 
-- get basic HTML and send/receive data between frontend and server
-- use ejs variables to send data
-- Add functionality to add new to do items
+- get basic HTML and send/receive data between frontend and server [done]
+- use ejs variables to send data [done]
+- Add functionality to add new to do items [done]
 - add Mongo database to the project to store the data
+  - connect using Mongoose (install pkg via npm)
+  - require mongoose
+  - define Schema
+  - 
 - add functionality to ensure all CRUD operations are possible
 
 > basic functionality of to do list should now be working

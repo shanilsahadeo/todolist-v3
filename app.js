@@ -5,9 +5,7 @@ const mongoose = require("mongoose");
 const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
-
-//item list array - to be replaced with database
-const itemsList = ["item 1", "item 2", "item 3"];
+app.use(express.static(__dirname + '/public'));
 
 //connect to database
 mongoose.connect("mongodb://localhost:27017/todoDB", {useNewUrlParser: true});
@@ -22,40 +20,57 @@ const ItemModel = mongoose.model("Item", itemsSchema);
 
 //create instance of item
 const item1 = new ItemModel({
-    name: "Test item created from code"
+    name: "Test item 1"
 })
 
-itemsList.push(item1.name);
-// console.log(itemsList[0]);
-// console.log(itemsList[1]);
-// console.log(itemsList[2]);
-// console.log(item1.name);
-//save the new model
-ItemModel.insertMany([itemsList], function(err){
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Successfully added items to database.");
-    }
+const item2 = new ItemModel({
+    name: "Test item 2"
 })
+
+const item3 = new ItemModel({
+    name: "Test item 3"
+})
+
+const defaultItems = [item1, item2, item3];
+
+
 
 app.get("/", function(req, res){
     let currentDate = new Date();
     let options = { weekday: "long", month: "long", day: "numeric" };
     let formattedDate = currentDate.toLocaleDateString("en-NZ", options)
- 
 
-    res.render("list", {ejsDayDateMonth: formattedDate, ejsItemsList: itemsList});
+    ItemModel.find({}, function(err, foundItems){
+        if (foundItems.length === 0) {
+            ItemModel.insertMany(defaultItems, function(err){
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Successfully added items to database.");
+                }
+            })
+            res.redirect("/");
+        } else {
+            res.render("list", {ejsDayDateMonth: formattedDate, ejsItemsList: foundItems});
+        }        
+    })
 });
 
 app.post("/", function(req, res){
-    var item = req.body.newItem;
+    let item = req.body.newItem;
 
-    itemsList.push(item);
+    ItemModel.create({name: item}, function(err){
+        if (err){
+            console.log(err)
+        } else {
+            console.log("Added [" + item + "] successfully");
+        }
+    })
+
     res.redirect("/");
 })
 
 
-app.listen(3000, function(){
-    console.log(">>>Server running on port 3000");
+app.listen(3131, function(){
+    console.log(">>>Server running on port 3131");
 });
