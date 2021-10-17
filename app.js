@@ -33,8 +33,6 @@ const item3 = new ItemModel({
 
 const defaultItems = [item1, item2, item3];
 
-
-
 app.get("/", function(req, res){
     let currentDate = new Date();
     let options = { weekday: "long", month: "long", day: "numeric" };
@@ -67,6 +65,19 @@ app.post("/", function(req, res){
         }
     })
 
+    res.redirect("/");
+})
+
+app.post("/delete", function(req, res){
+    const itemToBeDeleted = req.body.itemCheckbox;
+
+    ItemModel.findByIdAndDelete(itemToBeDeleted, function(err){
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Delete success: " + itemToBeDeleted);
+        }
+    });
     res.redirect("/");
 })
 
